@@ -1,20 +1,8 @@
-// import './css/all.css'
-// import './css/duotone-light.css'
-// import './css/duotone-thin.css'
-// import './css/duotone-regular.css'
-// import './css/sharp-duotone-light.css'
-// import './css/sharp-duotone-regular.css'
-// import './css/sharp-duotone-solid.css'
-// import './css/sharp-duotone-thin.css'
-// import './css/sharp-light.css'
-// import './css/sharp-regular.css'
-// import './css/sharp-solid.css'
-// import './css/sharp-thin.css'
-
 type IOptions = {
   duotone: boolean;
   sharp: boolean;
   duotoneSharp: boolean;
+  prefix: string;
 };
 
 const install = (entryOptions: Partial<IOptions>) => {
@@ -22,33 +10,43 @@ const install = (entryOptions: Partial<IOptions>) => {
     duotone: false,
     sharp: false,
     duotoneSharp: false,
+    prefix: '',
     ...entryOptions,
   };
   let fonst = [
-    './css/all.css',
+    `${options.prefix}css/all.css`,
     ...(options.duotone
-      ? ['./css/duotone-light.css', './css/duotone-thin.css', './css/duotone-regular.css']
+      ? [
+          `${options.prefix}css/duotone-light.css`,
+          `${options.prefix}css/duotone-thin.css`,
+          `${options.prefix}css/duotone-regular.cs`,
+        ]
       : []),
     ...(options.sharp
       ? [
-          './css/sharp-light.css',
-          './css/sharp-regular.css',
-          './css/sharp-solid.css',
-          './css/sharp-thin.css',
+          `${options.prefix}css/sharp-light.css`,
+          `${options.prefix}css/sharp-regular.css`,
+          `${options.prefix}css/sharp-solid.css`,
+          `${options.prefix}css/sharp-thin.css`,
         ]
       : []),
     ...(options.duotoneSharp
       ? [
-          './css/sharp-duotone-light.css',
-          './css/sharp-duotone-regular.css',
-          './css/sharp-duotone-solid.css',
-          './css/sharp-duotone-thin.css',
+          `${options.prefix}css/sharp-duotone-light.css`,
+          `${options.prefix}css/sharp-duotone-regular.css`,
+          `${options.prefix}css/sharp-duotone-solid.css`,
+          `${options.prefix}css/sharp-duotone-thin.css`,
         ]
       : []),
   ];
-  fonst.forEach((item) => {
-    import(item);
-  });
+  return {
+    fonst,
+    imp: () => {
+      fonst.forEach((item) => {
+        import(item);
+      });
+    },
+  };
 };
 
 export default { install };
