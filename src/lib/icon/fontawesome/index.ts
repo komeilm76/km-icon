@@ -41,11 +41,6 @@ const install = (entryOptions: Partial<IOptions>) => {
   ];
   return {
     fonst,
-    imp: () => {
-      fonst.forEach((item) => {
-        import(item);
-      });
-    },
   };
 };
 
