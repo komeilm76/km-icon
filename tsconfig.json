@@ -1,24 +1,37 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
+    // Environment setup & latest features
+    "lib": ["ESNext"],
+    "target": "ESNext",
+    "module": "Preserve",
     "moduleDetection": "force",
-    "noEmit": true,
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "rootDir": "src",
+    "outDir": "build/types",
+    "declaration": true,
+    "declarationDir": "build/types",
+    "emitDeclarationOnly": true,
 
-    /* Linting */
+    // Bundler mode
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": false,
+    "verbatimModuleSyntax": true,
+    "noEmit": false,
+
+    // Best practices
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    // Some stricter flags (disabled by default)
+    "noUnusedLocals": false, // *
+    "noUnusedParameters": false, // *
+    "noImplicitReturns": true /* Report error when not all code paths in function return a value. */, // *
+    "noFallthroughCasesInSwitch": true, // *
+    "noPropertyAccessFromIndexSignature": false // *
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/**", "build"]
 }

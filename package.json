@@ -1,38 +1,77 @@
 {
   "name": "km-icon",
   "version": "0.0.4",
-  "description": "easy use icons in projects",
-  "author": {
-    "name": "komeil mohammadian",
-    "email": "komeilmohammadian1376.web@gmail.com"
+  "license": "MIT",
+  "description": "A modern, open-source collection of web-ready icon fonts — perfect for developers, designers, and anyone building user interfaces.",
+  "main": "build/js/index.js",
+  "module": "build/esm/index.mjs",
+  "types": "build/types/index.d.ts",
+  "typings": "build/types/index.d.ts",
+  "browser": {
+    "./browser-cjs.js": "./cjs/index.cjs",
+    "./browser-esm.js": "./mjs/index.mjs"
   },
-  "type": "module",
-  "files": [
-    "dist",
-    "index.d.ts"
-  ],
-  "main": "./dist/index.umd.cjs",
-  "module": "./dist/index.js",
-  "types": "./index.d.ts",
-  "exports": {
-    "types": "./index.d.ts",
-    "import": "./dist/index.js",
-    "require": "./dist/index.umd.cjs"
+  "repository": {
+    "url": "https://github.com/komeilm76/km-icon.git"
   },
   "scripts": {
-    "dev": "npm run dev:vite",
-    "dev:vite": "vite --host",
-    "fix": "run-s fix:*",
-    "fix:prettier": "prettier \"src/**/*.ts\" --write",
-    "build": "tsc && vite build",
-    "make-release": "npm run fix && npm run build && release-it"
+    "fix:prettier": "prettier \"src/**/*.{ts,json}\" --write && prettier \"*.json\" --write",
+    "fix": "bun run fix:prettier",
+    "dev": "bun --watch run ./src/index.ts",
+    "build:types": "tsc",
+    "build:tsup": "bun run build:types && tsup",
+    "build": "bun run build:types && bun run build:tsup",
+    "prepublishOnly": "npm run build",
+    "publish-directly": "npm publish --access public",
+    "auto-release": "npm run fix:prettier && npm run build && release-it"
   },
   "devDependencies": {
-    "release-it": "^18.1.2",
-    "npm-run-all": "^4.1.5",
-    "open-cli": "^8.0.0",
-    "prettier": "^2.1.1",
-    "typescript": "~5.7.3",
-    "vite": "^6.1.1"
+    "@types/bun": "latest",
+    "release-it": "^17.6.0",
+    "typescript": "~5.9.2",
+    "prettier": "^2.1.1"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "files": [
+    "build",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "tsup",
+    "bun",
+    "release",
+    "publish",
+    "typeScript",
+    "km-packages"
+  ],
+  "exports": {
+    ".": {
+      "bun": "./src/index.ts",
+      "node": "./build/js/index.js",
+      "types": "./build/types/index.d.ts",
+      "require": "./build/cjs/index.cjs",
+      "import": "./build/esm/index.mjs",
+      "default": "./build/js/index.js"
+    },
+    "./esm": {
+      "types": "./build/esm/index.d.mts",
+      "import": "./build/esm/index.mjs"
+    },
+    "./js": {
+      "types": "./build/js/index.d.mts",
+      "default": "./build/js/index.js"
+    },
+    "./cjs": {
+      "types": "./build/cjs/index.d.ts",
+      "require": "./build/cjs/index.cjs"
+    },
+    "./assets/*": "./src/assets/*"
+  },
+  "dependencies": {
+    "tsup": "^8.5.0"
   }
 }
