@@ -1,6 +1,6 @@
 {
   "name": "km-icon",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "description": "A modern, open-source collection of web-ready icon fonts — perfect for developers, designers, and anyone building user interfaces.",
   "main": "build/js/index.js",
