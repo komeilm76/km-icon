@@ -49,9 +49,10 @@ export namespace Fontawesome {
         | 'utility-fill'
       >
     >;
+    brands: boolean;
   };
 
-  export const installFontAwesome = async (entryOptions: Partial<IInstallOptions>) => {
+  export const use = async (entryOptions: Partial<IInstallOptions> = {}) => {
     const options: IInstallOptions = {
       family: {
         classic: true,
@@ -59,31 +60,40 @@ export namespace Fontawesome {
       weight: {
         solid: true,
       },
+      brands: true,
       ...entryOptions,
     };
     const weightList: string[] = [];
     const familyList: string[] = [];
+    const brandList: string[] = [];
     weightList.push('fontawesome.css');
     // push weights
     if (options.weight.solid == true) {
       weightList.push('solid.css');
-    } else if (options.weight.regular) {
+    }
+    if (options.weight.regular) {
       weightList.push('regular.css');
-    } else if (options.weight.light) {
+    }
+    if (options.weight.light) {
       weightList.push('light.css');
-    } else if (options.weight.thin) {
+    }
+    if (options.weight.thin) {
       weightList.push('thin.css');
     }
     // push familys
     if (options.family.classic == true) {
-      familyList.push('classic.css');
-    } else if (options.family.duotone == true) {
+      // classic is not was a seprated import
+      // familyList.push('classic.css');
+    }
+    if (options.family.duotone == true) {
       familyList.push(...['duotone-regular.css', 'duotone-light.css', 'duotone-thin.css']);
-    } else if (options.family.sharp == true) {
+    }
+    if (options.family.sharp == true) {
       familyList.push(
         ...['sharp-solid.css', 'sharp-regular.css', 'sharp-light.css', 'sharp-thin.css']
       );
-    } else if (options.family['sharp-duotone'] == true) {
+    }
+    if (options.family['sharp-duotone'] == true) {
       familyList.push(
         ...[
           'sharp-duotone-solid.css',
@@ -92,28 +102,61 @@ export namespace Fontawesome {
           'sharp-duotone-thin.css',
         ]
       );
-    } else if (options.family.chisel == true) {
+    }
+    if (options.family.chisel == true) {
       familyList.push(...['chisel-regular.css']);
-    } else if (options.family.etch == true) {
+    }
+    if (options.family.etch == true) {
       familyList.push(...['etch-solid.css']);
-    } else if (options.family.jelly == true) {
+    }
+    if (options.family.jelly == true) {
       familyList.push(...['jelly-regular.css', 'jelly-duo-regular.css', 'jelly-fill-regular.css']);
-    } else if (options.family.notdog == true) {
+    }
+    if (options.family.notdog == true) {
       familyList.push(...['notdog-solid.css', 'notdog-duo-solid.css']);
-    } else if (options.family.slab == true) {
+    }
+    if (options.family.slab == true) {
       familyList.push(...['slab-regular.css', 'slab-press-regular.css']);
-    } else if (options.family.thumbprint == true) {
+    }
+    if (options.family.thumbprint == true) {
       familyList.push(...['thumbprint-light.css']);
-    } else if (options.family.utility == true) {
+    }
+    if (options.family.utility == true) {
       familyList.push(
         ...['utility-semibold.css', 'utility-duo-semibold.css', 'utility-fill-semibold.css']
       );
-    } else if (options.family.whiteboard == true) {
+    }
+    if (options.family.whiteboard == true) {
       familyList.push(...['whiteboard-semibold.css']);
     }
 
-    [...familyList, weightList].forEach(async (item) => {
-      await import(`km-icon/assets/fontawesome/v7/pro/css/${item}`);
-    });
+    if (options.brands == true) {
+      brandList.push('brands.css');
+    }
+
+    return {
+      weightList,
+      familyList,
+      brandList,
+      importCss: (basePath: string = 'km-icon/assets/fontawesome/v7/pro/css/') => {
+        return new Promise<{ errors: any[]; success: any[] }>((rs, rj) => {
+          const errors: any[] = [];
+          const success: any[] = [];
+          const readyForImportItems = [...weightList, ...familyList, ...brandList].map((item) => {
+            return () =>
+              import(`${basePath}${item}`)
+                .then((res) => {
+                  success.push(res);
+                })
+                .catch((error) => {
+                  errors.push(error);
+                });
+          });
+          Promise.all(readyForImportItems).then(() => {
+            rs({ errors, success });
+          });
+        });
+      },
+    };
   };
 }
