@@ -1,5 +1,5 @@
-import { Fontawesome } from "./fontawesome";
+import { Fontawesome } from './fontawesome';
 
 export default {
-  Fontawesome
+  Fontawesome,
 };
