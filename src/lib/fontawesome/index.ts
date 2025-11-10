@@ -51,7 +51,7 @@ type IInstallOptions = {
   brands: boolean;
 };
 
-export const use = async (entryOptions: Partial<IInstallOptions> = {}) => {
+const use = async (entryOptions: Partial<IInstallOptions> = {}) => {
   const options: IInstallOptions = {
     family: {
       classic: true,
@@ -158,3 +158,4 @@ export const use = async (entryOptions: Partial<IInstallOptions> = {}) => {
     },
   };
 };
+export default { use };
