@@ -51,7 +51,16 @@ export namespace Fontawesome {
     >;
   };
 
-  export const installFontAwesome = (options: IInstallOptions) => {
+  export const installFontAwesome = async (entryOptions: Partial<IInstallOptions>) => {
+    const options: IInstallOptions = {
+      family: {
+        classic: true,
+      },
+      weight: {
+        solid: true,
+      },
+      ...entryOptions,
+    };
     const weightList: string[] = [];
     const familyList: string[] = [];
     weightList.push('fontawesome.css');
@@ -103,8 +112,8 @@ export namespace Fontawesome {
       familyList.push(...['whiteboard-semibold.css']);
     }
 
-    [...familyList, weightList].forEach((item) => {
-      import(`km-icon/assets/fontawesome/v7/pro/css/${item}`);
+    [...familyList, weightList].forEach(async (item) => {
+      await import(`km-icon/assets/fontawesome/v7/pro/css/${item}`);
     });
   };
 }
