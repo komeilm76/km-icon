@@ -1,4 +1,5 @@
-import example from './example';
+import { Fontawesome } from "./fontawesome";
+
 export default {
-  example,
+  Fontawesome
 };
