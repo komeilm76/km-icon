@@ -21,7 +21,6 @@
     "build:types": "tsc",
     "build:tsup": "bun run build:types && tsup",
     "build": "bun run build:types && bun run build:tsup",
-    "prepublishOnly": "npm run build",
     "publish-directly": "npm publish --access public",
     "auto-release": "npm run fix:prettier && npm run build && release-it"
   },
