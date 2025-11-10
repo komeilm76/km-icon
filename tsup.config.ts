@@ -8,7 +8,7 @@ import { defineConfig } from "tsup";
  *   ✅ CommonJS output (.cjs)
  *   ✅ ESM output (.mjs)
  *   ✅ Regular JS output (.js)
- *   ✅ Copy assets to ./dist/assets
+ *   ✅ Copy assets to ./build/assets
  *
  * Run with: `tsup`
  */
@@ -32,8 +32,8 @@ export default defineConfig([
     platform: "neutral", // works in both browser + node
     minify: true,
     async onSuccess() {
-      // await fs.copy("src/assets", "dist/assets");
-      console.log("✅ Copied assets to dist/assets");
+      // await fs.copy("src/assets", "build/assets");
+      console.log("✅ Copied assets to build/assets");
     },
   },
 
