@@ -51,7 +51,7 @@ type IInstallOptions = {
   brands: boolean;
 };
 
-const use = async (entryOptions: Partial<IInstallOptions> = {}) => {
+const getListOfImportCssFileNames = async (entryOptions: Partial<IInstallOptions> = {}) => {
   const options: IInstallOptions = {
     family: {
       classic: true,
@@ -137,25 +137,70 @@ const use = async (entryOptions: Partial<IInstallOptions> = {}) => {
     weightList,
     familyList,
     brandList,
-    importCss: (basePath: string = 'km-icon/assets/fontawesome/v7/pro/css/') => {
-      return new Promise<{ errors: any[]; success: any[] }>((rs, rj) => {
-        const errors: any[] = [];
-        const success: any[] = [];
-        const readyForImportItems = [...weightList, ...familyList, ...brandList].map((item) => {
-          return () =>
-            import(`${basePath}${item}`)
-              .then((res) => {
-                success.push(res);
-              })
-              .catch((error) => {
-                errors.push(error);
-              });
-        });
-        Promise.all(readyForImportItems).then(() => {
-          rs({ errors, success });
-        });
-      });
-    },
   };
 };
-export default { use };
+
+type IOptions = {
+  name: string;
+  family: IFamily;
+  weight: IWeight;
+  size: ISize;
+  animation: IAnimation;
+  flip: IFlip;
+  rotate: IRotate;
+};
+const makeClassNameList = (
+  entryOptions: Partial<Omit<IOptions, 'name'>> & { name: IOptions['name'] }
+) => {
+  const options: IOptions = {
+    animation: 'default',
+    family: 'default',
+    flip: 'default',
+    rotate: 'default',
+    size: 'default',
+    weight: 'default',
+    ...entryOptions,
+  };
+  const outputClasses = [];
+  // name
+  outputClasses.push(`fa-${entryOptions.name}`);
+  // family
+  if (options.family == 'default' || options.family == 'classic') {
+    outputClasses.push('');
+  } else {
+    outputClasses.push(`fa-${options.family}`);
+  }
+  // weight
+  if (options.weight == 'default' || options.weight == 'solid') {
+    outputClasses.push(`fa-solid`);
+  } else {
+    outputClasses.push(`fa-${options.weight}`);
+  }
+  // animation
+  if (options.animation == 'default') {
+    outputClasses.push(``);
+  } else {
+    outputClasses.push(`fa-${options.animation}`);
+  }
+  // rotate
+  if (options.rotate == 'default') {
+    outputClasses.push(``);
+  } else {
+    outputClasses.push(`fa-${options.rotate}`);
+  }
+  // flip
+  if (options.flip == 'default') {
+    outputClasses.push(``);
+  } else {
+    outputClasses.push(`fa-${options.flip}`);
+  }
+  // size
+  if (options.size == 'default') {
+    outputClasses.push(``);
+  } else {
+    outputClasses.push(`fa-${options.size}`);
+  }
+  return outputClasses;
+};
+
+export default { makeClassNameList };
