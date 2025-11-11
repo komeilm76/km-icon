@@ -179,6 +179,11 @@ const makeClassNameList = (
   // animation
   if (options.animation == 'default') {
     outputClasses.push(``);
+  } else if (options.animation == 'spin-reverse') {
+    outputClasses.push(`fa-spin-reverse`);
+    outputClasses.push(`fa-spin`);
+  } else if (options.animation == 'spin') {
+    outputClasses.push(`fa-spin`);
   } else {
     outputClasses.push(`fa-${options.animation}`);
   }
@@ -186,13 +191,13 @@ const makeClassNameList = (
   if (options.rotate == 'default') {
     outputClasses.push(``);
   } else {
-    outputClasses.push(`fa-${options.rotate}`);
+    outputClasses.push(`fa-rotate-${options.rotate}`);
   }
   // flip
   if (options.flip == 'default') {
     outputClasses.push(``);
   } else {
-    outputClasses.push(`fa-${options.flip}`);
+    outputClasses.push(`fa-flip-${options.flip}`);
   }
   // size
   if (options.size == 'default') {
