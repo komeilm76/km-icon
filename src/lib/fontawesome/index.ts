@@ -148,6 +148,7 @@ type IOptions = {
   animation: IAnimation;
   flip: IFlip;
   rotate: IRotate;
+  brands: boolean;
 };
 const makeClassNameList = (
   entryOptions: Partial<Omit<IOptions, 'name'>> & { name: IOptions['name'] }
@@ -159,6 +160,7 @@ const makeClassNameList = (
     rotate: 'default',
     size: 'default',
     weight: 'default',
+    brands: false,
     ...entryOptions,
   };
   const outputClasses = [];
@@ -204,6 +206,10 @@ const makeClassNameList = (
     outputClasses.push(``);
   } else {
     outputClasses.push(`fa-${options.size}`);
+  }
+  // brands
+  if (options.brands) {
+    outputClasses.push('fa-brands');
   }
   return outputClasses;
 };
