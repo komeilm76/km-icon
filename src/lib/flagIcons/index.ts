@@ -828,5 +828,6 @@ const makeClassNameList = (entryOptions: Partial<IOptions>) => {
     });
     findedItems[0] && output.push(`fi-${findedItems[0].code}`);
   }
+  return output;
 };
 export default { makeClassNameList };
