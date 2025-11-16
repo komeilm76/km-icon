@@ -3,5 +3,5 @@ import fontawesome from './fontawesome';
 
 export default {
   fontawesome,
-  flagIcons
+  flagIcons,
 };
