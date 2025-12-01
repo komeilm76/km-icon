@@ -214,7 +214,7 @@ const makeClassNameList = (
   return outputClasses;
 };
 
-type IMakeConfigEntry = {
+export type IMakeConfigEntry = {
   weight: Record<'solid' | 'regular' | 'light' | 'thin', boolean>;
   familyGroup: Record<
     | 'classic'

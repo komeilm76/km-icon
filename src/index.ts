@@ -1,3 +1,9 @@
 import lib from './lib';
-const kmIcon = lib;
+import type { IMakeConfigEntry } from './lib/fontawesome';
 export default kmIcon;
+
+export namespace kmIcon {
+  export const flagIcons = lib.flagIcons;
+  export const fontawesome = lib.fontawesome;
+  export type iFontawesomeConfig = IMakeConfigEntry;
+}
