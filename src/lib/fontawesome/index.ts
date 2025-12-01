@@ -214,4 +214,70 @@ const makeClassNameList = (
   return outputClasses;
 };
 
-export default { makeClassNameList };
+type IMakeConfigEntry = {
+  weight: Record<'solid' | 'regular' | 'light' | 'thin', boolean>;
+  familyGroup: Record<
+    | 'classic'
+    | 'duotone'
+    | 'sharp'
+    | 'sharp-duotone'
+    | 'chisel'
+    | 'etch'
+    | 'jelly'
+    | 'notdog'
+    | 'slab'
+    | 'thumbprint'
+    | 'utility'
+    | 'whiteboard',
+    boolean
+  >;
+  brands: boolean;
+};
+
+const makeConfig = (entryConfig: Partial<IMakeConfigEntry>) => {
+  const config: IMakeConfigEntry = {
+    weight: {
+      solid: true,
+      regular: false,
+      light: false,
+      thin: false,
+    },
+    familyGroup: {
+      classic: true,
+      duotone: false,
+      sharp: false,
+      'sharp-duotone': false,
+      chisel: false,
+      etch: false,
+      jelly: false,
+      notdog: false,
+      slab: false,
+      thumbprint: false,
+      utility: false,
+      whiteboard: false,
+    },
+    brands: false,
+    ...entryConfig,
+  };
+
+  const families = Object.keys(config.familyGroup)
+    .filter((i) => {
+      return config.familyGroup[i as keyof IMakeConfigEntry['familyGroup']] == true;
+    })
+    .map((item) => {
+      return `family-${item}`;
+    }) as `family-${keyof IMakeConfigEntry['familyGroup']}`[];
+  const weights = Object.keys(config.weight)
+    .filter((i) => {
+      return config.weight[i as keyof IMakeConfigEntry['weight']] == true;
+    })
+    .map((item) => {
+      return `weight-${item}`;
+    }) as `weight-${keyof IMakeConfigEntry['weight']}`[];
+  const brands = config.brands == true ? (['brands'] as 'brands'[]) : [];
+  return {
+    names: [...families, ...weights, ...brands],
+  };
+};
+
+export default { makeClassNameList, makeConfig };
