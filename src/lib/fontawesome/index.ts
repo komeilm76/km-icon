@@ -265,7 +265,11 @@ const makeConfig = (entryConfig: Partial<IMakeConfigEntry>) => {
       return config.familyGroup[i as keyof IMakeConfigEntry['familyGroup']] == true;
     })
     .map((item) => {
-      return `family-${item}`;
+      if (item == 'classic') {
+        return `${'fontawesome'}`;
+      } else {
+        return `family-${item}`;
+      }
     }) as `family-${keyof IMakeConfigEntry['familyGroup']}`[];
   const weights = Object.keys(config.weight)
     .filter((i) => {
